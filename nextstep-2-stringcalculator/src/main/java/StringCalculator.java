@@ -8,6 +8,10 @@ public class StringCalculator {
      */
 
     public int add(String text) {
+        if(text == null || text.isEmpty()) {
+            return 0;
+        }
+
         String[] numberToken = text.split(",|:");
 
         int addNumber = 0;
