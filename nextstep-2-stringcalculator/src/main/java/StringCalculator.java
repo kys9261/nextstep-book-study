@@ -1,3 +1,6 @@
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 public class StringCalculator {
 
     /**
@@ -8,11 +11,37 @@ public class StringCalculator {
      */
 
     public int add(String text) {
+        // 문자열 빈 문자 확인
         if(text == null || text.isEmpty()) {
             return 0;
         }
 
+        // 문자에 구분자 확인
+        String customeSeparator = "";
+        Matcher m = Pattern.compile("//(.)\n(.*)").matcher(text);
+        if (m.find()) {
+            customeSeparator = m.group(1);
+        } else {
+
+        }
+
+
+
+
+        // 문자 숫자 변환
+        //
+
+
+
+
+
+
+
+
+
         String[] numberToken = text.split(",|:");
+
+
 
         int addNumber = 0;
         for(int i=0; i<numberToken.length; i++) {
