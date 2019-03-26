@@ -3,49 +3,35 @@ import java.util.regex.Pattern;
 
 public class StringCalculator {
 
-    /**
-     * 요구사항
-     * 1. 쉼표 또는 콜론을 구분자로 가지는 문자열을 전달하는 경우 구분자로 분리한 각 숫자의 합을 반환
-     * 2. 1번의 쉼표 또는 콜론외에 커스텀 구분자를 지정할수 있고, '//'와 '\n'사이의 문자를 커스텀 구분자로 사용
-     * 3. 숫자 값이 음수일때 RuntimeException 처리 해야함
-     */
-
     public int add(String text) {
         // 문자열 빈 문자 확인
-        if(text == null || text.isEmpty()) {
+        if (text == null || text.isEmpty()) {
             return 0;
         }
 
         // 문자에 구분자 확인
-        String customeSeparator = "";
+        String[] splitTextArr = null;
         Matcher m = Pattern.compile("//(.)\n(.*)").matcher(text);
         if (m.find()) {
-            customeSeparator = m.group(1);
-        } else {
-
+            splitTextArr = m.group(2).split(m.group(1));
+        } else if(text.contains(",") || text.contains(":")) {
+            splitTextArr = text.split(",|:");
         }
 
+        // 구분자 조건에 만족하지 않음
+        if (splitTextArr == null) {
+            return 0;
+        }
 
-
-
-        // 문자 숫자 변환
-        //
-
-
-
-
-
-
-
-
-
-        String[] numberToken = text.split(",|:");
-
-
-
+        // 배열에서 숫자 변환후 합산
         int addNumber = 0;
-        for(int i=0; i<numberToken.length; i++) {
-            addNumber += Integer.valueOf(numberToken[i]);
+        for(int i=0; i<splitTextArr.length; i++) {
+            // 음수값 확인
+            if (Integer.valueOf(splitTextArr[i]) < 0) {
+                throw new RuntimeException();
+            }
+
+            addNumber += Integer.valueOf(splitTextArr[i]);
         }
 
         return addNumber;

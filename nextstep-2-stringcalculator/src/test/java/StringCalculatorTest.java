@@ -52,6 +52,11 @@ public class StringCalculatorTest {
     @Test(expected = NumberFormatException.class)
     public void paramWhiteSpace() {
         stringCalculator.add("1, 2,3 ");
+    }
+
+    // 입력된 문자열에 숫자 앞뒤 공백이 있을때
+    @Test(expected = NumberFormatException.class)
+    public void paramWhiteSpace2() {
         stringCalculator.add("//;\n1 ; 2; 3 ;");
     }
 }
