@@ -26,13 +26,13 @@ public class StringCalculatorTest {
 
     // 쉼표 또는 콜론으로 구분자를 가진 문자열 계산
     @Test
-    public void add() {
+    public void sum() {
         assertEquals(6, stringCalculator.add("1,2,3"));
     }
 
     // 커스텀 구분자를 가진 문자열 계산
     @Test
-    public void addCustomDivider() {
+    public void sumCustomSeparator() {
         assertEquals(6, stringCalculator.add("//;\n1;2;3"));
     }
 
