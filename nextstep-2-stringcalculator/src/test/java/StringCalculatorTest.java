@@ -12,43 +12,51 @@ public class StringCalculatorTest {
         stringCalculator = new StringCalculator();
     }
 
-    // 입력된 Text값이 빈 문자열 일때
+    // 입력된 문자열값이 빈 문자열 일때
     @Test
-    public void paramTextEmpty() {
+    public void paramStringEmpty() {
         assertEquals(0, stringCalculator.add(""));
     }
 
-    // 입력된 Text값이 null일때
+    // 입력된 문자열값이 null일때
     @Test
-    public void paramTextNull() {
+    public void paramStringNull() {
         assertEquals(0, stringCalculator.add(null));
     }
 
     // 쉼표 또는 콜론으로 구분자를 가진 문자열 계산
     @Test
-    public void add() {
+    public void sum() {
         assertEquals(6, stringCalculator.add("1,2,3"));
     }
 
     // 커스텀 구분자를 가진 문자열 계산
     @Test
-    public void addCustomDivider() {
+    public void sumCustomSeparator() {
         assertEquals(6, stringCalculator.add("//;\n1;2;3"));
     }
 
     // 문자열에 음수값이 있을때
     @Test(expected = RuntimeException.class)
-    public void paramTextNegative() throws RuntimeException{
+    public void paramStringNegative() throws RuntimeException {
         stringCalculator.add("1,-1,3");
     }
 
-    // 커스텀 구분자를 정하지 않고, 쉼표 또는 콜론으로 구분자가 아닐때
+    // 커스텀 구분자를 정하지 않고, 쉼표 또는 콜론 구분자가 아닐때
     @Test
     public void paramInvalidSeparator() {
-        assertEquals(0, "1/2/3");
+        assertEquals(0, stringCalculator.add("1/2/3"));
     }
 
+    // 입력된 문자열에 숫자 앞뒤 공백이 있을때
+    @Test(expected = NumberFormatException.class)
+    public void paramWhiteSpace() {
+        stringCalculator.add("1, 2,3 ");
+    }
 
-
-
+    // 입력된 문자열에 숫자 앞뒤 공백이 있을때
+    @Test(expected = NumberFormatException.class)
+    public void paramWhiteSpace2() {
+        stringCalculator.add("//;\n1 ; 2; 3 ;");
+    }
 }
