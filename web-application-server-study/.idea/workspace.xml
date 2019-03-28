@@ -1,34 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="ca0fe6f2-bd96-474a-b37b-f3eae8a96bda" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/../string-calculator/.idea/compiler.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../string-calculator/.idea/libraries/Gradle__junit_junit_4_12.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../string-calculator/.idea/libraries/Gradle__org_hamcrest_hamcrest_core_1_3.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../string-calculator/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../string-calculator/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../string-calculator/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../string-calculator/.idea/modules/kys9261.github.io.nextstep.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../string-calculator/.idea/modules/kys9261.github.io.nextstep.main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../string-calculator/.idea/modules/kys9261.github.io.nextstep.test.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../string-calculator/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../string-calculator/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../string-calculator/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../string-calculator/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../string-calculator/gradlew.bat" beforeDir="false" afterPath="$PROJECT_DIR$/../string-calculator/gradlew.bat" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../string-calculator/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../string-calculator/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../string-calculator/src/main/main.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../string-calculator/src/test/java/StringCalculatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/../string-calculator/src/test/java/StringCalculatorTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../string-calculator/src/test/java/Test.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../string-calculator/src/test/test.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web-application-server-raw/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/../web-application-server-raw/.idea/.name" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web-application-server-raw/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../web-application-server-raw/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web-application-server-raw/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../web-application-server-raw/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web-application-server-raw/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../web-application-server-raw/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../web-application-server-raw/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../web-application-server-raw/settings.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle" afterDir="false" />
-    </list>
+    <list default="true" id="ca0fe6f2-bd96-474a-b37b-f3eae8a96bda" name="Default Changelist" comment="" />
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
     <ignored path="$PROJECT_DIR$/build/" />
@@ -51,7 +24,7 @@
             <expand>
               <path>
                 <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
-                <item name="nextstep" type="f1a62948:ProjectNode" />
+                <item name="web-application-server" type="f1a62948:ProjectNode" />
               </path>
             </expand>
             <select />
@@ -95,11 +68,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/webserver/WebServer.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="450">
-              <caret line="34" selection-start-line="34" selection-end-line="34" />
+              <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
             </state>
           </provider>
         </entry>
@@ -122,11 +95,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/settings.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="42" selection-start-column="42" selection-end-column="42" />
+            <state relative-caret-position="30">
+              <caret line="2" selection-start-line="2" selection-end-line="2" />
             </state>
           </provider>
         </entry>
@@ -164,6 +137,32 @@
               <item name="web-application-server" type="b2602c69:ProjectViewProjectNode" />
               <item name="web-application-server-study" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
             </path>
+            <path>
+              <item name="web-application-server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web-application-server-study" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web-application-server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web-application-server-study" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+            </path>
+            <path>
+              <item name="web-application-server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web-application-server-study" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="web-application-server" type="b2602c69:ProjectViewProjectNode" />
+              <item name="web-application-server-study" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="webserver" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -174,7 +173,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553749199463" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1553749217739" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -235,12 +234,12 @@
       <updated>1553692503872</updated>
       <workItem from="1553692508071" duration="387000" />
       <workItem from="1553692952234" duration="675000" />
-      <workItem from="1553749141543" duration="29000" />
+      <workItem from="1553749141543" duration="110000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1091000" />
+    <option name="totallyTimeSpent" value="1172000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="390" y="31" width="1920" height="1593" extended-state="0" />
@@ -256,12 +255,12 @@
       <window_info anchor="bottom" id="SonarLint" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32958436" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32929292" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Build" order="7" visible="true" weight="0.32929292" />
+      <window_info anchor="bottom" id="Build" order="7" weight="0.32929292" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Docker" order="9" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
@@ -321,13 +320,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/webserver/WebServer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="34" selection-start-line="34" selection-end-line="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/util/HttpRequestUtils.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
@@ -344,8 +336,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/settings.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="42" selection-start-column="42" selection-end-column="42" />
+        <state relative-caret-position="30">
+          <caret line="2" selection-start-line="2" selection-end-line="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/webserver/WebServer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="34" lean-forward="true" selection-start-line="34" selection-end-line="34" />
         </state>
       </provider>
     </entry>
@@ -401,11 +400,12 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>io</last-edited>
+          <last-edited>kys9261.github.io.web-application-server</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.2" />
+                <option value="0.6" />
               </list>
             </option>
           </splitter-proportions>
