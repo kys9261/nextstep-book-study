@@ -1,6 +1,9 @@
 plugins {
     id 'java'
+    id 'application'
 }
+
+mainClassName = 'webserver.WebServer'
 
 group 'kys9261.github.io'
 version '1.0-SNAPSHOT'
