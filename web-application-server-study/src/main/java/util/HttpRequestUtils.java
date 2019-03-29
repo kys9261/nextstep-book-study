@@ -53,6 +53,11 @@ public class HttpRequestUtils {
         return getKeyValue(header, ": ");
     }
 
+    public static String getUrl(String firstHead) {
+        String[] splited = firstHead.split(" ");
+        return splited[1];
+    }
+
     public static class Pair {
         String key;
         String value;
