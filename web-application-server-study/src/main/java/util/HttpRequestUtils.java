@@ -58,6 +58,15 @@ public class HttpRequestUtils {
         return splited[1];
     }
 
+    public static String getRequestURL(String url) {
+        return url.substring(0, url.indexOf("?"));
+    }
+
+    public static String getQueryString(String url) {
+        return url.substring(url.indexOf("?")+1);
+    }
+
+
     public static class Pair {
         String key;
         String value;
