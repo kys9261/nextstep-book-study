@@ -70,4 +70,22 @@ public class HttpRequestUtilsTest {
         Pair pair = HttpRequestUtils.parseHeader(header);
         assertThat(pair, is(new Pair("Content-Length", "59")));
     }
+
+    @Test
+    public void getUrl() {
+        String header = "GET /index.html HTTP/1.1";
+        assertEquals("/index.html", HttpRequestUtils.getUrl(header));
+    }
+
+    @Test
+    public void getRequestURL() {
+        String url = "/user/create?userId=kys9261&password=1234";
+        assertEquals("/user/create", HttpRequestUtils.getRequestURL(url));
+    }
+
+    @Test
+    public void getQueryString() {
+        String url = "/user/create?userId=kys9261&password=1234";
+        assertEquals("userId=kys9261&password=1234", HttpRequestUtils.getQueryString(url));
+    }
 }
