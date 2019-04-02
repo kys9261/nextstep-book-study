@@ -66,7 +66,6 @@ public class HttpRequestUtils {
         return url.substring(url.indexOf("?")+1);
     }
 
-
     public static class Pair {
         String key;
         String value;
