@@ -3,7 +3,7 @@
 책에 나와있는 챕터 3이후에 사용될 [web-application-server](https://github.com/slipp/web-application-server)
 프로젝트는 는 이클립스와 메이븐으로 작성되었는데
 
-최근엔 인텔리제이와 그래이들로 많이 사용하기 때문에 새로 만들었습니다.
+최근엔 인텔리제이와 그래들로 많이 사용하기 때문에 새로 만들었습니다.
 
 
 # 실행
