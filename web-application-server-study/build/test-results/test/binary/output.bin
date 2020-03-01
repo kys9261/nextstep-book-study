@@ -1,0 +1,24 @@
+p19:07:27,876 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback.groovy]
+r19:07:27,876 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Could NOT find resource [logback-test.xml]
+◊19:07:27,876 |-INFO in ch.qos.logback.classic.LoggerContext[default] - Found resource [logback.xml] at [file:/Users/kimcp/Documents/nextstep-book-study/web-application-server-study/build/resources/main/logback.xml]
+i19:07:27,935 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - debug attribute not set
+ï19:07:27,939 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - About to instantiate appender of type [ch.qos.logback.core.ConsoleAppender]
+e19:07:27,945 |-INFO in ch.qos.logback.core.joran.action.AppenderAction - Naming appender as [STDOUT]
+ô19:07:28,000 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - This appender no longer admits a layout as a sub-component, set an encoder instead.
+ç19:07:28,000 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - To ensure compatibility, wrapping your layout in LayoutWrappingEncoder.
+í19:07:28,000 |-WARN in ch.qos.logback.core.ConsoleAppender[STDOUT] - See also http://logback.qos.ch/codes.html#layoutInsteadOfEncoder for details
+t19:07:28,000 |-INFO in ch.qos.logback.classic.joran.action.RootLoggerAction - Setting level of ROOT logger to DEBUG
+~19:07:28,000 |-INFO in ch.qos.logback.core.joran.action.AppenderRefAction - Attaching appender named [STDOUT] to Logger[ROOT]
+g19:07:28,001 |-INFO in ch.qos.logback.classic.joran.action.ConfigurationAction - End of configuration.
+ä19:07:28,002 |-INFO in ch.qos.logback.classic.joran.JoranConfigurator@62c51136 - Registering current configuration as safe fallback point
+
+ï19:07:28.011 [DEBUG] [Test worker] [webserver.HttpRequest] - request line : GET /user/create?userId=javajigi&password=password&name=JaeSung HTTP/1.1
+[19:07:28.014 [DEBUG] [Test worker] [webserver.HttpRequest] - header : Host: localhost:8080
+]19:07:28.015 [DEBUG] [Test worker] [webserver.HttpRequest] - header : Connection: keep-alive
+R19:07:28.015 [DEBUG] [Test worker] [webserver.HttpRequest] - header : Accept: */*
+g19:07:28.025 [DEBUG] [Test worker] [webserver.HttpRequest] - request line : POST /user/create HTTP/1.1
+[19:07:28.025 [DEBUG] [Test worker] [webserver.HttpRequest] - header : Host: localhost:8080
+]19:07:28.025 [DEBUG] [Test worker] [webserver.HttpRequest] - header : Connection: keep-alive
+Y19:07:28.025 [DEBUG] [Test worker] [webserver.HttpRequest] - header : Content-Length: 46
+v19:07:28.026 [DEBUG] [Test worker] [webserver.HttpRequest] - header : Content-Type: application/x-www-form-urlencoded
+R19:07:28.026 [DEBUG] [Test worker] [webserver.HttpRequest] - header : Accept: */*
