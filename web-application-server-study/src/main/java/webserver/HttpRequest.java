@@ -1,5 +1,8 @@
 package webserver;
 
+import com.google.common.base.Charsets;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import util.HttpRequestUtils;
 import util.IOUtils;
 
@@ -11,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class HttpRequest {
+    private static final Logger log = LoggerFactory.getLogger(HttpRequest.class);
 
     private String method;
     private String path;
@@ -18,39 +22,34 @@ public class HttpRequest {
     private Map<String, String> queryStringMap = new HashMap<>();
 
     public HttpRequest(InputStream in) throws IOException {
-        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
-        String line = bufferedReader.readLine();
+        BufferedReader br = new BufferedReader(new InputStreamReader(in, Charsets.UTF_8));
 
+        String line = br.readLine();
+        log.debug("request line : {}", line);
         if (line == null) {
             return;
         }
 
         String[] tokens = line.split(" ");
-        int contentLength = 0;
-        Map<String, String> headerMap = new HashMap<String, String>();
-        while (!"".equals(line)) {
-            line = bufferedReader.readLine();
-            if(line.contains("Content-Length")) {
-                contentLength = getContentLength(line);
-            } else {
-                String[] splitedHeader = line.split(": ");
-                if (splitedHeader.length == 2) {
-                    headerMap.put(splitedHeader[0], splitedHeader[1]);
-                }
-            }
-            line = bufferedReader.readLine();
+        method = tokens[0];
+
+        line = br.readLine();
+        HttpRequestUtils.Pair pair;
+        while (line != null && !line.equals("")) {
+            log.debug("header : {}", line);
+            pair = HttpRequestUtils.parseHeader(line);
+            headerMap.put(pair.getKey(), pair.getValue());
+            line = br.readLine();
         }
 
-        String bodyData = IOUtils.readData(bufferedReader, Integer.parseInt(headerMap.get("Content-Length")));
-        queryStringMap = HttpRequestUtils.parseQueryString(bodyData);
-
-        method = tokens[0];
-        path = tokens[1];
-    }
-
-    private int getContentLength(String line) {
-        String[] headerTokens = line.split(":");
-        return Integer.parseInt(headerTokens[1].trim());
+        if(method.equals("GET")) {
+            path = HttpRequestUtils.getRequestURL(tokens[1]);
+            queryStringMap = HttpRequestUtils.parseQueryString(HttpRequestUtils.getQueryString(tokens[1]));
+        } else {
+            path = tokens[1];
+            String bodyData = IOUtils.readData(br, Integer.parseInt(headerMap.get("Content-Length")));
+            queryStringMap = HttpRequestUtils.parseQueryString(bodyData);
+        }
     }
 
     public String getMethod() {

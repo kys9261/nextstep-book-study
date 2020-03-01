@@ -6,7 +6,6 @@ import model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.HttpRequestUtils;
-import util.IOUtils;
 
 import java.io.*;
 import java.net.Socket;
@@ -28,57 +27,33 @@ public class RequestHandler extends Thread {
                 connection.getPort());
 
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
-            BufferedReader br = new BufferedReader(new InputStreamReader(in, Charsets.UTF_8));
+            HttpRequest httpRequest = new HttpRequest(in);
 
-            String line = br.readLine();
-            log.debug("request line : {}", line);
-            if (line == null) {
-                return;
-            }
-
-            String[] tokens = line.split(" ");
-            boolean logined = false;
-            int contentLength = 0;
-            while (!line.equals("")) {
-                log.debug("header : {}", line);
-                line = br.readLine();
-
-                if (line.contains("Cookie")) {
-                    logined = isLogin(line);
-                }
-
-                if (line.contains("Content-Length")) {
-                    contentLength = getContentLength(line);
-                }
-            }
-
-            String url = tokens[1];
-            if (url.startsWith("/user/create")) {
-                String bodyData = IOUtils.readData(br, contentLength);
-                Map<String, String> queryStringMap = HttpRequestUtils.parseQueryString(bodyData);
-                User user = new User(queryStringMap.get("userId"), queryStringMap.get("password"), queryStringMap.get("name"), queryStringMap.get("email"));
+            if (httpRequest.getPath().startsWith("/user/create")) {
+                User user = new User(
+                        httpRequest.getParameter("userId"),
+                        httpRequest.getParameter("password"),
+                        httpRequest.getParameter("name"),
+                        httpRequest.getParameter("email"));
                 DataBase.addUser(user);
                 log.debug("User : {}", user);
                 DataOutputStream dos = new DataOutputStream(out);
                 response302Header(dos, "/index.html");
-            } else if (url.startsWith("/user/login")) {
-                String bodyData = IOUtils.readData(br, contentLength);
-                Map<String, String> queryStringMap = HttpRequestUtils.parseQueryString(bodyData);
-
-                User existUser = DataBase.findUserById(queryStringMap.get("userId"));
+            } else if (httpRequest.getPath().startsWith("/user/login")) {
+                User existUser = DataBase.findUserById(httpRequest.getParameter("userId"));
                 if(existUser == null) {
                     responseResource(out, "/user/login_failed.html");
                     return;
                 }
 
-                if (existUser.getPassword().equals(queryStringMap.get("password"))) {
+                if (existUser.getPassword().equals(httpRequest.getParameter("password"))) {
                     DataOutputStream dos = new DataOutputStream(out);
                     response302LoginSuccessHeader(dos);
                 } else {
                     responseResource(out, "/user/login_failed.html");
                 }
-            } else if (url.startsWith("/user/list")) {
-                if(!logined) {
+            } else if (httpRequest.getPath().startsWith("/user/list")) {
+                if(isLogin(httpRequest)) {
                     responseResource(out, "/user/login.html");
                     return;
                 }
@@ -94,22 +69,21 @@ public class RequestHandler extends Thread {
                 DataOutputStream dos = new DataOutputStream(out);
                 response200Header(dos, body.length);
                 responseBody(dos, body);
-            } else if (url.endsWith(".css")) {
+            } else if (httpRequest.getPath().endsWith(".css")) {
                 DataOutputStream dos = new DataOutputStream(out);
-                byte[] body = Files.readAllBytes(new File("./webapp" + url).toPath());
+                byte[] body = Files.readAllBytes(new File("./webapp" + httpRequest.getPath()).toPath());
                 response200HeaderWithCss(dos, body.length);
                 responseBody(dos, body);
             } else {
-                responseResource(out, url);
+                responseResource(out, httpRequest.getPath());
             }
         } catch (IOException e) {
             log.error(e.getMessage());
         }
     }
 
-    private boolean isLogin(String line) {
-        String[] headerTokens = line.split(":");
-        Map<String, String> cookies = HttpRequestUtils.parseCookies(headerTokens[1].trim());
+    private boolean isLogin(HttpRequest httpRequest) {
+        Map<String, String> cookies = HttpRequestUtils.parseCookies(httpRequest.getHeader("Cookie"));
         String value = cookies.get("logined");
         if (value == null) {
             return false;
@@ -186,10 +160,4 @@ public class RequestHandler extends Thread {
             log.error(e.getMessage());
         }
     }
-
-    private int getContentLength(String line) {
-        String[] headerTokens = line.split(":");
-        return Integer.parseInt(headerTokens[1].trim());
-    }
-
 }
