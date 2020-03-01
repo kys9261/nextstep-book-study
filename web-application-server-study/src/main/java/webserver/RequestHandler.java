@@ -1,20 +1,18 @@
 package webserver;
 
-import java.io.*;
-import java.net.Socket;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.nio.file.Files;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
+import com.google.common.base.Charsets;
 import db.DataBase;
 import model.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import util.HttpRequestUtils;
 import util.IOUtils;
+
+import java.io.*;
+import java.net.Socket;
+import java.nio.file.Files;
+import java.util.Collection;
+import java.util.Map;
 
 public class RequestHandler extends Thread {
     private static final Logger log = LoggerFactory.getLogger(RequestHandler.class);
@@ -30,96 +28,117 @@ public class RequestHandler extends Thread {
                 connection.getPort());
 
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(in));
+            BufferedReader br = new BufferedReader(new InputStreamReader(in, Charsets.UTF_8));
 
-            String line = bufferedReader.readLine();
+            String line = br.readLine();
+            log.debug("request line : {}", line);
             if (line == null) {
                 return;
             }
 
-            String url = HttpRequestUtils.getUrl(line);
+            String[] tokens = line.split(" ");
+            boolean logined = false;
+            int contentLength = 0;
+            while (!line.equals("")) {
+                log.debug("header : {}", line);
+                line = br.readLine();
 
-            Map<String, String> headerMap = new HashMap<String, String>();
-            while (!"".equals(line)) {
-                line = bufferedReader.readLine();
+                if (line.contains("Cookie")) {
+                    logined = isLogin(line);
+                }
 
-                log.info(line);
-
-                String[] splitedHeader = line.split(": ");
-                if (splitedHeader.length == 2) {
-                    headerMap.put(splitedHeader[0], splitedHeader[1]);
+                if (line.contains("Content-Length")) {
+                    contentLength = getContentLength(line);
                 }
             }
 
+            String url = tokens[1];
             if (url.startsWith("/user/create")) {
-                String bodyData = IOUtils.readData(bufferedReader, Integer.parseInt(headerMap.get("Content-Length")));
+                String bodyData = IOUtils.readData(br, contentLength);
                 Map<String, String> queryStringMap = HttpRequestUtils.parseQueryString(bodyData);
                 User user = new User(queryStringMap.get("userId"), queryStringMap.get("password"), queryStringMap.get("name"), queryStringMap.get("email"));
                 DataBase.addUser(user);
-
+                log.debug("User : {}", user);
                 DataOutputStream dos = new DataOutputStream(out);
-                response302Header(dos);
-            } else if (url.equals("/user/login")) {
-                String bodyData = IOUtils.readData(bufferedReader, Integer.parseInt(headerMap.get("Content-Length")));
+                response302Header(dos, "/index.html");
+            } else if (url.startsWith("/user/login")) {
+                String bodyData = IOUtils.readData(br, contentLength);
                 Map<String, String> queryStringMap = HttpRequestUtils.parseQueryString(bodyData);
 
-                String cookie = "";
-                String redirectUrl = "";
                 User existUser = DataBase.findUserById(queryStringMap.get("userId"));
-                if(existUser == null || !existUser.getPassword().equals(queryStringMap.get("password"))) {
-                    cookie = "logined=false";
-                    redirectUrl = "/user/login_failed.html";
-                } else {
-                    cookie = "logined=true";
-                    redirectUrl = "/index.html";
+                if(existUser == null) {
+                    responseResource(out, "/user/login_failed.html");
+                    return;
                 }
 
-                DataOutputStream dos = new DataOutputStream(out);
-                response302HeaderWithCookie(dos, redirectUrl, cookie);
+                if (existUser.getPassword().equals(queryStringMap.get("password"))) {
+                    DataOutputStream dos = new DataOutputStream(out);
+                    response302LoginSuccessHeader(dos);
+                } else {
+                    responseResource(out, "/user/login_failed.html");
+                }
             } else if (url.startsWith("/user/list")) {
-                Map<String, String> cookies = HttpRequestUtils.parseCookies(headerMap.get("Cookie"));
-                if(cookies.get("logined") == null || !Boolean.parseBoolean(cookies.get("logined"))) {
-                    DataOutputStream dos = new DataOutputStream(out);
-                    response302Header(dos);
-                } else {
-                    int idx = 3;
-
-                    Collection<User> userList = DataBase.findAll();
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("<tr>");
-                    for(User user : userList) {
-                        sb.append("<th scope=\"row\">"+idx+"</th><td>"+user.getUserId()+"</td> <td>"+user.getName()+"</td> <td>"+user.getEmail()+"</td><td><a href=\"#\" class=\"btn btn-success\" role=\"button\">수정</a></td></tr>");
-                        idx++;
-                    }
-
-                    String fileData = new String(Files.readAllBytes(new File("./webapp" + url).toPath()) );
-                    fileData = fileData.replace("%user_list%", URLDecoder.decode(sb.toString(), "UTF-8"));
-
-                    DataOutputStream dos = new DataOutputStream(out);
-                    byte[] body = fileData.getBytes();
-                    response200Header(dos, body.length);
-                    responseBody(dos, body);
+                if(!logined) {
+                    responseResource(out, "/user/login.html");
+                    return;
                 }
-            } else {
+
+                Collection<User> userList = DataBase.findAll();
+                StringBuilder sb = new StringBuilder();
+                sb.append("<table border='1'>");
+                for(User user : userList) {
+                    sb.append("<tr><td>"+user.getUserId()+"</td> <td>"+user.getName()+"</td> <td>"+user.getEmail()+"</td><td><a href=\"#\" class=\"btn btn-success\" role=\"button\">수정</a></td></tr>");
+                }
+                sb.append("</table>");
+                byte[] body = sb.toString().getBytes();
+                DataOutputStream dos = new DataOutputStream(out);
+                response200Header(dos, body.length);
+                responseBody(dos, body);
+            } else if (url.endsWith(".css")) {
                 DataOutputStream dos = new DataOutputStream(out);
                 byte[] body = Files.readAllBytes(new File("./webapp" + url).toPath());
-
-                if(headerMap.get("Accept").contains("text/css")){
-                    response200HeaderWithCss(dos, body.length);
-                } else {
-                    response200Header(dos, body.length);
-                }
+                response200HeaderWithCss(dos, body.length);
                 responseBody(dos, body);
+            } else {
+                responseResource(out, url);
             }
         } catch (IOException e) {
             log.error(e.getMessage());
         }
     }
 
-    private void response302Header(DataOutputStream dos) {
+    private boolean isLogin(String line) {
+        String[] headerTokens = line.split(":");
+        Map<String, String> cookies = HttpRequestUtils.parseCookies(headerTokens[1].trim());
+        String value = cookies.get("logined");
+        if (value == null) {
+            return false;
+        }
+        return Boolean.parseBoolean(value);
+    }
+
+    private void response302LoginSuccessHeader(DataOutputStream dos) {
         try {
-            dos.writeBytes("HTTP/1.1 302 Found \r\n");
-            dos.writeBytes("Location: /index.html\r\n");
+            dos.writeBytes("HTTP/1.1 302 Redirect \r\n");
+            dos.writeBytes("Set-Cookie: logined=true \r\n");
+            dos.writeBytes("Location: /index.html \r\n");
+            dos.writeBytes("\r\n");
+        } catch (IOException e) {
+            log.error(e.getMessage());
+        }
+    }
+
+    private void responseResource(OutputStream out, String url) throws IOException {
+        DataOutputStream dos = new DataOutputStream(out);
+        byte[] body = Files.readAllBytes(new File("./webapp" + url).toPath());
+        response200Header(dos, body.length);
+        responseBody(dos, body);
+    }
+
+    private void response302Header(DataOutputStream dos, String url) {
+        try {
+            dos.writeBytes("HTTP/1.1 302 Redirect \r\n");
+            dos.writeBytes("Location: " + url + " \r\n");
             dos.writeBytes("\r\n");
         } catch (IOException e) {
             log.error(e.getMessage());
@@ -128,7 +147,7 @@ public class RequestHandler extends Thread {
 
     private void response302HeaderWithCookie(DataOutputStream dos, String redirectUrl, String cookie) {
         try {
-            dos.writeBytes("HTTP/1.1 302 Found \r\n");
+            dos.writeBytes("HTTP/1.1 302 Redirect \r\n");
             dos.writeBytes("Location: " + redirectUrl + "\r\n");
             dos.writeBytes("Set-Cookie: " + cookie + "\r\n");
             dos.writeBytes("\r\n");
@@ -166,6 +185,11 @@ public class RequestHandler extends Thread {
         } catch (IOException e) {
             log.error(e.getMessage());
         }
+    }
+
+    private int getContentLength(String line) {
+        String[] headerTokens = line.split(":");
+        return Integer.parseInt(headerTokens[1].trim());
     }
 
 }
